@@ -51,13 +51,9 @@ function displayBook() {
         div.setAttribute("data-index", i);
         for (let key in myLibrary[i]) {
             if (key === 'read') {
-                if (myLibrary[i][key] === 'Read') {
-                    readBtn.classList.add('read');
-                    readBtn.innerHTML = "Read";
-                } else {
-                    readBtn.classList.add("unread");
-                    readBtn.innerHTML = "Not read";
-                }
+                const isRead = myLibrary[i][key] === 'Read';
+                readBtn.classList.add(isRead ? 'read' : 'unread');
+                readBtn.innerHTML = isRead ? 'Read' : 'Not read'; 
                 div.appendChild(readBtn);
                 readBtn.setAttribute("data-index", i);
             } else {
@@ -75,29 +71,48 @@ function displayBook() {
         div.appendChild(btn);
     }
 
-    const toggleRead = document.querySelectorAll(".read");
-    for (let btn of toggleRead) {
-        btn.addEventListener("click", (e) => {
-            const toggleBtn = e.target;
-            const index = toggleBtn.getAttribute("data-index");
-            toggleBtn.classList.remove("read");
-            toggleBtn.classList.add("unread");
-            toggleBtn.innerHTML = "Not read";
-            myLibrary[index]["read"] = "Not Read";
-        });
-    }
+    //const toggleRead = document.querySelectorAll(".read");
+    //for (let btn of toggleRead) {
+    //    btn.addEventListener("click", (e) => {
+    //        const toggleBtn = e.target;
+    //        const index = toggleBtn.getAttribute("data-index");
+    //        toggleBtn.classList.remove("read");
+    //        toggleBtn.classList.add("unread");
+    //        toggleBtn.innerHTML = "Not read";
+    //        myLibrary[index]["read"] = "Not Read";
+    //    });
+    //}
+    //
+    //const toggleUnread = document.querySelectorAll(".unread");
+    //for (let btn of toggleUnread) {
+    //    btn.addEventListener("click", (e) => {
+    //        const toggleBtn = e.target;
+    //        const index = toggleBtn.getAttribute("data-index");
+    //        toggleBtn.classList.remove("unread");
+    //        toggleBtn.classList.add("read");
+    //        toggleBtn.innerHTML = "Read";
+    //        myLibrary[index]["read"] = "Read";
+    //    });
+    //}
 
-    const toggleUnread = document.querySelectorAll(".unread");
-    for (let btn of toggleUnread) {
-        btn.addEventListener("click", (e) => {
+    container.addEventListener("click", (e) => {
+        if (e.target.classList.contains("read") || e.target.classList.contains("unread")) {
             const toggleBtn = e.target;
             const index = toggleBtn.getAttribute("data-index");
-            toggleBtn.classList.remove("unread");
-            toggleBtn.classList.add("read");
-            toggleBtn.innerHTML = "Read";
-            myLibrary[index]["read"] = "Read";
-        });
-    }
+
+            if (toggleBtn.classList.contains("read")) {
+                toggleBtn.classList.remove("read");
+                toggleBtn.classList.add("unread");
+                toggleBtn.innerHTML = "Not read";
+                myLibrary[index][read] = "Not Read";
+            } else {
+                toggleBtn.classList.remove("unread");
+                toggleBtn.classList.add("read");
+                toggleBtn.innerHTML = "Read";
+                myLibrary[index]["read"] = "Read" 
+            }
+        }
+    });
 
 
     //const removeBtns = document.querySelectorAll(".remove");
